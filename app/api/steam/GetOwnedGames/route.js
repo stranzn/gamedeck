@@ -17,7 +17,7 @@ export async function GET(request) {
   try {
     const res = await fetch(
       `http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=${apiKey}&steamid=${steamId}&include_appinfo&include_played_free_games&format=json`
-    );
+    ); // needs fixing (check discord for api format)
 
     if (!res.ok) {
       return NextResponse.json(
