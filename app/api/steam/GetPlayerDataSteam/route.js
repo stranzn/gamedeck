@@ -1,4 +1,4 @@
-// app/api/steam/GetPlayerSummaries/route.js
+// app/api/steam/GetPlayerDataSteam/route.js
 
 import { NextResponse } from "next/server";
 
@@ -21,12 +21,8 @@ export async function GET(request) {
 
   try {
     const res = await fetch(
-      `https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=28F77B7C1FB5DF84451BDDF8E3B55150&steamids=76561198989478972`
+      `https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=${apiKey}&steamids=${steamId}`
     );
-
-    // https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=${apiKey}&steamids=${steamId}
-
-    console.log(res);
 
     if (!res.ok) {
       return NextResponse.json(

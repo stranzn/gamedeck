@@ -42,7 +42,6 @@ export default function PublicProfile() {
 
     return(
         <div>
-            <p>This is the public profile of: {userData.username} UID: {uid}</p>
             <ProfileHead uid={uid}/>
         </div>
     );
