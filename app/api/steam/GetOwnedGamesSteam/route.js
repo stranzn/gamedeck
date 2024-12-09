@@ -36,6 +36,7 @@ export async function GET(request) {
     const gamesData = data.response.games.map((game) => ({
       appid: game.appid,
       name: game.name,
+      img_icon_url: game.img_icon_url,
       playtime_forever: game.playtime_forever,
     }));
     

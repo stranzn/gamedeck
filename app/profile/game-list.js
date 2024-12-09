@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import Game from "./game";
 
-export default function GameList({ uid=null, steamId = null }) {
+export default function GameList({ uid = null, steamId = null }) {
     const [games, setGames] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -11,7 +11,7 @@ export default function GameList({ uid=null, steamId = null }) {
     useEffect(() => {
         const fetchGamesDataSteam = async () => {
             if (steamId === null) return;
-            setLoading(true);
+            setLoading(true);   
             try {
                 const response = await fetch(`/api/steam/GetOwnedGamesSteam?steamId=${steamId}`)
                 if (!response.ok) {
@@ -59,9 +59,15 @@ export default function GameList({ uid=null, steamId = null }) {
     }
 
     return (
-        <div>
+        <div className='flex flex-wrap justify-center'>
             {games.map((game) => (
-                <Game key={game.appid} name={game.name} time={game.playtime_forever} />
+                <Game
+                    key={game.appid}
+                    name={game.name}
+                    time={game.playtime_forever}
+                    icon={game.img_icon_url}
+                    appid={game.appid}
+                />
             ))}
         </div>
     );

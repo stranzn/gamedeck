@@ -33,7 +33,9 @@ export default function ProfileHead({ uid }) {
           }
           const steamData = await response.json();
           setSteamData(steamData);
-        }   
+        } else {
+          
+        }
       } catch (err) {
         console.error("Error fetching user data:", err);
         setError(err.message || "Error fetching user data.");
@@ -71,20 +73,47 @@ export default function ProfileHead({ uid }) {
     );
   }
 
+  console.log(steamData?.players?.[0]?.personaname)
 
   return (
-    <div className="bg-slate-700 w-1/2 mx-auto p-2 mb-4 mt-10 rounded-lg shadow-md">
-      <div className="flex items-center space-x-4">
+    <div className="bg-slate-800 w-1/2 mx-auto p-4 mb-4 mt-10 rounded-xl shadow-2xl border-2 border-slate-600">
+      <div className="flex items-center space-x-6">
         <Image
-          src={steamData?.players?.[0]?.avatarfull || "/default-profile.png"}
-          width={84}
-          height={84}
+          src={steamData?.players?.[0]?.avatarfull || "/defaultUser.png"}
+          width={100}
+          height={100}
           alt="Profile Picture"
-          className="rounded-full border-4 border-black"
+          className="rounded-full border-4 border-slate-500 hover:scale-105 transition-transform duration-300"
         />
-        <div>
-          <h2 className="text-4xl font-bold text-black font-alagard">{userData.username}</h2>
-          {/* You can add more user details here if needed */}
+        <div className="flex-grow">
+          <h2 className="text-4xl font-bold text-white font-alagard tracking-wider">
+            {userData.username}
+          </h2>
+          <p className="text-sm text-gray-300 font-alagard tracking-wide">
+            {userData.email}
+          </p>
+        </div>
+        <div className="flex items-center space-x-3">
+          {userData.steamId !== null && steamData?.players?.[0] ? (
+            <div className="flex items-center space-x-2 bg-slate-700 px-3 py-2 rounded-lg">
+              <Image
+                src="/steamLogo.png"
+                width={30}
+                height={30}
+                alt="Steam Logo"
+                className="opacity-80"
+              />
+              <p className="text-white font-alagard text-sm tracking-wide">
+                {steamData.players[0].personaname}
+              </p>
+            </div>
+          ) : (
+            <div className="bg-slate-700 px-3 py-2 rounded-lg">
+              <p className="text-gray-400 font-alagard text-sm">
+                No Steam account linked
+              </p>
+            </div>
+          )}
         </div>
       </div>
     </div>

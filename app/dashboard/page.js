@@ -30,7 +30,7 @@ export default function Page() {
           setUserData(data);
         } else {
           throw new Error("User does not exist or data unavailable.");
-        }  
+        }
       } catch (err) {
         console.error("Error fetching user data:", err);
         setError(err.message || "Error fetching user data.");
@@ -61,18 +61,34 @@ export default function Page() {
   return (
     <div>
       <ProfileHead uid={uid} />
-      <div className="flex justify-center mt-2">
-        <button 
+      <div className="flex justify-center space-x-4 mt-6">
+        <button
           onClick={() => {
             logout().catch((err) => setError(err.message));
-          }} 
-          className="font-alagard text-xl px-6 py-2 bg-neutral-800 text-white rounded-lg hover:bg-emerald-600 transition duration-300 uppercase tracking-wider"
+          }}
+          className="font-alagard text-xl px-8 py-3 bg-slate-800 text-white rounded-xl 
+      hover:bg-emerald-700 transition duration-300 uppercase tracking-wider 
+      shadow-md hover:shadow-emerald-600/50 border-2 border-slate-600 
+      hover:border-emerald-700 active:scale-95 transform"
         >
           Logout
         </button>
+        <button
+          onClick={() => {
+            router.push("/edit");
+          }}
+          className="font-alagard text-xl px-8 py-3 bg-slate-800 text-white rounded-xl 
+      hover:bg-blue-700 transition duration-300 uppercase tracking-wider 
+      shadow-md hover:shadow-blue-600/50 border-2 border-slate-600 
+      hover:border-blue-700 active:scale-95 transform"
+        >
+          Edit Profile
+        </button>
       </div>
       {userData?.steamId && (
-        <GameList steamId={userData.steamId}/>
+        <div className="mt-8">
+          <GameList steamId={userData.steamId} />
+        </div>
       )}
     </div>
   );

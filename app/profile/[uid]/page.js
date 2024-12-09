@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { getUserData } from "@/app/_services/user-data-service";
 import ProfileHead from "../profile-head";
+import GameList from "../game-list";
 
 export default function PublicProfile() {
     const params = useParams();
@@ -34,15 +35,20 @@ export default function PublicProfile() {
 
     if (loading) {
         return (
-            <div className="flex justify-center items-center min-h-screen">
+            <div className="flex justify-center font-alagard items-center min-h-screen">
                 <p>Loading profile...</p>
             </div>
         );
     }
 
-    return(
+    return (
         <div>
-            <ProfileHead uid={uid}/>
+            <ProfileHead uid={uid} />
+            <div className="flex justify-center mt-2">
+            </div>
+            {userData?.steamId && (
+                <GameList steamId={userData.steamId} />
+            )}
         </div>
     );
 }
