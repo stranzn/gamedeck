@@ -15,6 +15,28 @@ export const getUserData = async (uid) => {
     }
 }
 
+export const updateUserData = async (uid, userData) => {
+  try {
+    const userDocRef = doc(db, "users", uid);
+
+    const updateData ={
+      email: userData.email,
+      username: userData.username,
+      steamId: userData.steamId || "",
+      games: userData.games
+    }
+
+    await setDoc(userDocRef, updateData, {merge: true});
+
+    const updatedDoc = await getDoc(userDocRef);
+    return updatedDoc.data();
+
+
+  } catch (error) {
+    console.error("Error updating user document:", error);
+  }
+}
+
 export const createUserDocument = async (user) => {
     if (!user) {
         return;
@@ -28,9 +50,9 @@ export const createUserDocument = async (user) => {
       try {
         await setDoc(userDocRef, {
           email,
-          username: null,
+          username: "unknown",
           games: [],
-          steamId: null,
+          steamId: "",
         });
       } catch (error) {
         console.error("Error creating user document:", error);

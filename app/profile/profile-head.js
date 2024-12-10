@@ -24,7 +24,7 @@ export default function ProfileHead({ uid }) {
           throw new Error("User does not exist or data unavailable.");
         }
 
-        if (data.steamId !== null) {
+        if (data.steamId !== "") {
           const response = await fetch(`/api/steam/GetPlayerDataSteam?steamId=${data.steamId}`);
 
           if (!response.ok) {
@@ -37,7 +37,6 @@ export default function ProfileHead({ uid }) {
           
         }
       } catch (err) {
-        console.error("Error fetching user data:", err);
         setError(err.message || "Error fetching user data.");
       } finally {
         setLoading(false);
@@ -94,7 +93,7 @@ export default function ProfileHead({ uid }) {
           </p>
         </div>
         <div className="flex items-center space-x-3">
-          {userData.steamId !== null && steamData?.players?.[0] ? (
+          {userData.steamId !== "" && steamData?.players?.[0] ? (
             <div className="flex items-center space-x-2 bg-slate-700 px-3 py-2 rounded-lg">
               <Image
                 src="/steamLogo.png"

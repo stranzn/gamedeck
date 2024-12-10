@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 
-export default function Game({ name, time, icon = null, platform = null, appid = null }) {
+export default function Game({ name, time, icon = null, appid = null }) {
     const [gameIcon, setGameIcon] = useState('/defaultGame.png');
     const [hours, setHours] = useState(null);
 

@@ -11,6 +11,7 @@ export default function Page() {
   const [userData, setUserData] = useState(null);
   const [uid, setUid] = useState(null);
   const [error, setError] = useState(null);
+  const [shareButtonText, setShareButtonText] = useState("Share Profile");
   const router = useRouter();
 
   useEffect(() => {
@@ -26,13 +27,11 @@ export default function Page() {
       try {
         const data = await getUserData(user.uid);
         if (data) {
-          console.log(data);
           setUserData(data);
         } else {
           throw new Error("User does not exist or data unavailable.");
         }
       } catch (err) {
-        console.error("Error fetching user data:", err);
         setError(err.message || "Error fetching user data.");
       }
     };
@@ -58,6 +57,10 @@ export default function Page() {
     );
   }
 
+  const utilButtonStyle = `font-alagard text-xl px-8 py-3 bg-slate-800 text-white rounded-xl
+                          hover:bg-blue-700 transition duration-300 uppercase tracking-wider shadow-md 
+                          hover:shadow-blue-600/50 border-2 border-slate-600 hover:border-blue-700 active:scale-95 transform`;
+
   return (
     <div>
       <ProfileHead uid={uid} />
@@ -75,14 +78,31 @@ export default function Page() {
         </button>
         <button
           onClick={() => {
-            router.push("/edit");
+            router.push("/dashboard/edit");
           }}
-          className="font-alagard text-xl px-8 py-3 bg-slate-800 text-white rounded-xl 
-      hover:bg-blue-700 transition duration-300 uppercase tracking-wider 
-      shadow-md hover:shadow-blue-600/50 border-2 border-slate-600 
-      hover:border-blue-700 active:scale-95 transform"
+          className={utilButtonStyle}
         >
           Edit Profile
+        </button>
+
+        <button
+          onClick={() => {
+            const profileLink = `${window.location.origin}/profile/${user.uid}`;
+
+            navigator.clipboard
+              .writeText(profileLink)
+              .then(() => {
+                setShareButtonText("Copied!");
+                setTimeout(() => setShareButtonText("Share Profile"), 2000);
+              })
+              .catch((err) => {
+                console.error("Failed to copy: ", err);
+                setError("Failed to copy link");
+              });
+          }}
+          className={utilButtonStyle}
+        >
+          {shareButtonText}
         </button>
       </div>
       {userData?.steamId && (
