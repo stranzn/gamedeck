@@ -17,8 +17,8 @@ export const AuthContextProvider = ({ children }) => {
 
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-            setUser(currentUser || null); // Explicitly set `null` if no user is logged in
-            setLoading(false); // Stop loading once we have the user or null
+            setUser(currentUser || null);
+            setLoading(false);
         });
         return () => unsubscribe();
     }, []);
@@ -26,7 +26,6 @@ export const AuthContextProvider = ({ children }) => {
     const login = async (email, password) => {
         try {
             const userCred = await signInWithEmailAndPassword(auth, email, password);
-            // Firebase automatically updates the user state in `onAuthStateChanged`
             return userCred.user;
         } catch (error) {
             throw new Error(error.message);
@@ -36,7 +35,6 @@ export const AuthContextProvider = ({ children }) => {
     const register = async (email, password) => {
         try {
             const userCred = await createUserWithEmailAndPassword(auth, email, password);
-            // Firebase automatically updates the user state in `onAuthStateChanged`
             return userCred.user;
         } catch (error) {
             throw new Error(error.message);
@@ -53,7 +51,7 @@ export const AuthContextProvider = ({ children }) => {
 
     return (
         <AuthContext.Provider value={{ user, loading, register, login, logout }}>
-            {!loading && children} {/* Render children only after loading is false */}
+            {!loading && children}
         </AuthContext.Provider>
     );
 };

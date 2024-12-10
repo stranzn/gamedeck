@@ -1,8 +1,7 @@
 import { db } from '@/app/_utils/firebase';
-import { collection, getDoc, addDoc, query, doc, setDoc, DocumentReference } from "firebase/firestore";
+import { getDoc, doc, setDoc } from "firebase/firestore";
 
 export const getUserData = async (uid) => {
-    console.log(uid);
     try {
         const q = doc(db, "users", uid);
         const querySnapshot = await getDoc(q);

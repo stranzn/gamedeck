@@ -72,8 +72,6 @@ export default function ProfileHead({ uid }) {
     );
   }
 
-  console.log(steamData?.players?.[0]?.personaname)
-
   return (
     <div className="bg-slate-800 w-1/2 mx-auto p-4 mb-4 mt-10 rounded-xl shadow-2xl border-2 border-slate-600">
       <div className="flex items-center space-x-6">
